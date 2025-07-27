@@ -1,5 +1,8 @@
 import { useQuery, useQueries, UseQueryResult } from "@tanstack/react-query";
-import { ApiResponseDeputados } from "@/interfaces/ApiResponse";
+import {
+  ApiResponseDeputados,
+  ApiResponseDespesas,
+} from "@/interfaces/ApiResponse";
 import axios from "axios";
 
 const baseUrl = "http://127.0.0.1:8000/api";
@@ -8,7 +11,6 @@ const baseUrl = "http://127.0.0.1:8000/api";
 
 const fetchDeputados = async (page: number) => {
   const { data } = await axios.get(`${baseUrl}/deputados?page=${page}`);
-  console.log(data);
   if (data) return data;
 };
 export function useDeputados(
@@ -23,7 +25,8 @@ export function useDeputados(
 
 // busca um deputado por seu id
 const findDeputado = async (id: number) => {
-  const { data } = await axios.get(`${baseUrl}/deputados/${id}`);
+  const { data } = await axios.get(`${baseUrl}/deputados/buscar/${id}`);
+  console.log("🚀 ~ findDeputado ~ data:", data);
   if (data) return data;
 };
 
@@ -56,34 +59,18 @@ export function useDeputadoByName(
   });
 }
 
-export function useAllDeputados() {
-  const firstPageQuery = useDeputados(1);
-  const totalPages: number = firstPageQuery.data?.pagination.last_page || 0;
+// busca as despesas de determinado deputado
+const fetchDespesas = async (deputadoId: number) => {
+  const { data } = await axios.get(`${baseUrl}/despesas/findAll/${deputadoId}`);
+  if (data) return data;
+};
 
-  const allPagesQueries = useQueries({
-    queries: Array.from({ length: totalPages }, (_, index: number) => ({
-      queryKey: ["Deputados", index + 1],
-      queryFn: () => fetchDeputados(index + 1),
-      staleTime: 1000 * 60 * 5,
-      enabled: totalPages > 0, // só executar quando soubermos quantas páginas são
-    })),
+export function useDespesas(
+  deputadoId: number
+): UseQueryResult<ApiResponseDespesas> {
+  return useQuery<ApiResponseDespesas>({
+    queryKey: ["Despesas", deputadoId],
+    queryFn: () => fetchDeputados(deputadoId),
+    staleTime: 1000 * 60 * 5,
   });
-
-  const allData = allPagesQueries
-    .filter((query) => query.data)
-    .flatMap((query) => query.data?.data || []);
-
-  const isLoading: boolean =
-    firstPageQuery.isLoading ||
-    allPagesQueries.some((query) => query.isLoading);
-  const isError: boolean =
-    firstPageQuery.isError || allPagesQueries.some((query) => query.isError);
-
-  return {
-    data: allData,
-    isLoading,
-    isError,
-    totalPages,
-    pagination: firstPageQuery.data?.pagination,
-  };
 }
