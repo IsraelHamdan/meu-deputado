@@ -83,16 +83,10 @@ class DeputadoController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function buscarPorNome(Request $request): JsonResponse
+    public function buscarPorNome(Request $request, string $nome): JsonResponse
     {
         try {
-            $request->validate([
-                'nome' => 'required|string|min:2'
-            ]);
-
-            $nome = $request->get('nome');
             $perPage = $request->get('per_page', 15);
-
             $deputados = $this->deputadoService->buscarPorNome($nome, $perPage);
 
             return response()->json([
@@ -122,83 +116,5 @@ class DeputadoController extends Controller
         }
     }
 
-    /**
-     * Busca deputados por ID do partido
-     *
-     * @param Request $request
-     * @param string $partidoId
-     * @return JsonResponse
-     */
-    public function buscarPorPartidoId(Request $request, string $partidoId): JsonResponse
-    {
-        try {
-            $perPage = $request->get('per_page', 15);
-            $deputados = $this->deputadoService->buscarPorPartidoId($partidoId, $perPage);
-
-            return response()->json([
-                'success' => true,
-                'data' => $deputados->items(),
-                'pagination' => [
-                    'current_page' => $deputados->currentPage(),
-                    'last_page' => $deputados->lastPage(),
-                    'per_page' => $deputados->perPage(),
-                    'total' => $deputados->total(),
-                    'from' => $deputados->firstItem(),
-                    'to' => $deputados->lastItem(),
-                ]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao buscar deputados por partido',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Busca deputados por nome do partido
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function buscarPorNomePartido(Request $request): JsonResponse
-    {
-        try {
-            $request->validate([
-                'nome_partido' => 'required|string|min:2'
-            ]);
-
-            $nomePartido = $request->get('nome_partido');
-            $perPage = $request->get('per_page', 15);
-
-            $deputados = $this->deputadoService->buscarPorNomePartido($nomePartido, $perPage);
-
-            return response()->json([
-                'success' => true,
-                'data' => $deputados->items(),
-                'pagination' => [
-                    'current_page' => $deputados->currentPage(),
-                    'last_page' => $deputados->lastPage(),
-                    'per_page' => $deputados->perPage(),
-                    'total' => $deputados->total(),
-                    'from' => $deputados->firstItem(),
-                    'to' => $deputados->lastItem(),
-                ]
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Dados inválidos',
-                'errors' => $e->errors()
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao buscar deputados por nome do partido',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
 
 }

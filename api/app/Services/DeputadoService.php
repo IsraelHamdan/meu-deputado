@@ -30,7 +30,7 @@ class DeputadoService
      */
     public function buscarPorId($id): Deputado
     {
-        return Deputado::with('partido')->findOrFail($id);
+        return Deputado::findOrFail($id);
     }
 
     /**
@@ -42,43 +42,15 @@ class DeputadoService
      */
     public function buscarPorNome(string $nome, int $perPage = 15): LengthAwarePaginator
     {
-        return Deputado::with('nome')
+        return Deputado::where('nome', 'LIKE', "%{$nome}%")
             ->where('nome', 'LIKE', "%{$nome}%")
             ->orderBy('nome')
             ->paginate($perPage);
     }
 
-    /**
-     * Busca todos os deputados de um partido específico pelo ID do partido
-     *
-     * @param string|int $partidoId
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function buscarPorPartidoId($partidoId, int $perPage = 15): LengthAwarePaginator
-    {
-        return Deputado::with('partido')
-            ->where('partido_id', $partidoId)
-            ->orderBy('name')
-            ->paginate($perPage);
-    }
 
-    /**
-     * Busca todos os deputados de um partido pelo nome do partido (busca parcial)
-     *
-     * @param string $nomePDeputado
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function buscarPorNomePartido(string $nomePDeputado, int $perPage = 15): LengthAwarePaginator
-    {
-        return Deputado::with('partido')
-            ->whereHas('partido', function ($query) use ($nomePDeputado) {
-                $query->where('nome', 'LIKE', "%{$nomePDeputado}%");
-            })
-            ->orderBy('name')
-            ->paginate($perPage);
-    }
+
+
 
 
 }

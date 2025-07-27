@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Deputado } from '@/types/api';
-import {useDeputadoByName, useDeputadosByPartido, useDeputados, useDeputado} from '@/hooks/use-deputados';
+import {useDeputadoByName, useDeputados, useDeputado} from '@/hooks/use-deputados';
 import DeputadoCard from '@/components/DeputadoCard';
 
 export default function Deputados() {
