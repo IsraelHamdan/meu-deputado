@@ -29,6 +29,7 @@ export function useDeputado(id:number): UseQueryResult<ApiResponseDeputados> {
     return useQuery<ApiResponseDeputados>({
         queryKey:['Deputado', id],
         queryFn: () => findDeputado(id),
+        enabled: !!id
     })
 }
 
@@ -43,6 +44,8 @@ export function useDeputadoByName(nome:string, page: number): UseQueryResult<Api
     return useQuery<ApiResponseDeputados>({
         queryKey:['DeputadoByName', nome],
         queryFn: () => findDeputadoByName(nome, page),
+        enabled: nome.length > 2,
+        staleTime: 1000 * 60 * 5,
     })
 }
 

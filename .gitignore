@@ -1,0 +1,126 @@
+# ===========================================
+# CONFIGURAÇÃO GLOBAL DO PROJETO
+# ===========================================
+
+# Node modules de qualquer subprojeto
+**/node_modules/
+node_modules/
+
+# ===========================================
+# CONFIGURAÇÕES DO LARAVEL (pasta api/)
+# ===========================================
+
+# Laravel specific
+api/.phpunit.cache
+api/bootstrap/ssr
+api/public/build
+api/public/hot
+api/public/storage
+api/storage/*.key
+api/storage/pail
+api/vendor
+api/.env
+api/.env.backup
+api/.env.production
+api/.phpactor.json
+api/.phpunit.result.cache
+api/Homestead.json
+api/Homestead.yaml
+api/auth.json
+
+# Logs Laravel
+api/storage/logs/*.log
+api/storage/framework/cache/data/*
+api/storage/framework/sessions/*
+api/storage/framework/testing/*
+api/storage/framework/views/*
+
+# ===========================================
+# CONFIGURAÇÕES DO NEXT.JS (pasta cliente/)
+# ===========================================
+
+# Dependencies
+cliente/.pnp
+cliente/.pnp.*
+cliente/.yarn/*
+!cliente/.yarn/patches
+!cliente/.yarn/plugins
+!cliente/.yarn/releases
+!cliente/.yarn/versions
+
+# Testing
+cliente/coverage
+
+# Next.js
+cliente/.next/
+cliente/out/
+
+# Production
+cliente/build
+
+# Debug logs
+cliente/npm-debug.log*
+cliente/yarn-debug.log*
+cliente/yarn-error.log*
+cliente/.pnpm-debug.log*
+
+# Environment files
+cliente/.env*
+
+# Vercel
+cliente/.vercel
+
+# TypeScript
+cliente/*.tsbuildinfo
+cliente/next-env.d.ts
+
+# ===========================================
+# CONFIGURAÇÕES GERAIS
+# ===========================================
+
+# Environment files (global)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs gerais
+npm-debug.log
+yarn-error.log
+*.log
+
+# Sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Certificados
+*.pem
+*.key
+*.crt
+
+# Backup files
+*.backup
+*.bak

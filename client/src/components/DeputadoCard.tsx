@@ -3,9 +3,9 @@ import { ApiResponseDeputados } from '@/interfaces/ApiResponse';
 import { Deputado } from '@/interfaces/DeputadosResponse';
 
 
-export default function DeputadoCard(selectedId: number) {
+export default function DeputadoCard(deputadoId: number) {
     // @ts-ignore
-    const {data, isLoading, isError, isSuccess} = useDeputado<ApiResponseDeputados>(selectedId || 0);
+    const {data, isLoading, isError, isSuccess} = useDeputado<ApiResponseDeputados>(deputadoId || 0);
 
     if(isLoading) return <div> Carregando</div>
 

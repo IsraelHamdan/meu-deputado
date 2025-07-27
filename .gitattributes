@@ -1,0 +1,71 @@
+# ===========================================
+# CONFIGURAÇÕES GLOBAIS
+# ===========================================
+
+# Normalização de quebras de linha
+* text=auto eol=lf
+
+# ===========================================
+# CONFIGURAÇÕES DO LARAVEL (pasta api/)
+# ===========================================
+
+# PHP files
+api/**/*.php diff=php linguist-language=php
+api/**/*.blade.php diff=html linguist-language=blade
+
+# ===========================================
+# CONFIGURAÇÕES DO NEXT.JS (pasta cliente/)
+# ===========================================
+
+# JavaScript/TypeScript files
+cliente/**/*.js linguist-language=javascript
+cliente/**/*.jsx linguist-language=javascript
+cliente/**/*.ts linguist-language=typescript
+cliente/**/*.tsx linguist-language=typescript
+
+# JSON files
+cliente/**/*.json linguist-language=json
+
+# ===========================================
+# CONFIGURAÇÕES POR TIPO DE ARQUIVO
+# ===========================================
+
+# Web files
+*.html diff=html linguist-language=html
+*.css diff=css linguist-language=css
+*.scss linguist-language=scss
+*.sass linguist-language=sass
+*.js linguist-language=javascript
+*.jsx linguist-language=javascript
+*.ts linguist-language=typescript
+*.tsx linguist-language=typescript
+
+# PHP files
+*.php diff=php linguist-language=php
+*.blade.php diff=html linguist-language=blade
+
+# Documentation
+*.md diff=markdown linguist-language=markdown linguist-documentation
+*.txt linguist-documentation
+
+# Configuration files
+*.json linguist-language=json
+*.yaml linguist-language=yaml
+*.yml linguist-language=yaml
+*.xml linguist-language=xml
+
+# ===========================================
+# ARQUIVOS A SEREM IGNORADOS NO EXPORT
+# ===========================================
+
+# Documentation
+README.md export-ignore
+CHANGELOG.md export-ignore
+LICENSE export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+
+# Development files
+api/README.md export-ignore
+cliente/README.md export-ignore
+*.example export-ignore
