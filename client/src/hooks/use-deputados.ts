@@ -24,13 +24,13 @@ export function useDeputados(
 }
 
 // busca um deputado por seu id
-const findDeputado = async (id: number) => {
+const findDeputado = async (id: string) => {
   const { data } = await axios.get(`${baseUrl}/deputados/buscar/${id}`);
   console.log("🚀 ~ findDeputado ~ data:", data);
   if (data) return data;
 };
 
-export function useDeputado(id: number): UseQueryResult<ApiResponseDeputados> {
+export function useDeputado(id: string): UseQueryResult<ApiResponseDeputados> {
   return useQuery<ApiResponseDeputados>({
     queryKey: ["Deputado", id],
     queryFn: () => findDeputado(id),
@@ -60,17 +60,22 @@ export function useDeputadoByName(
 }
 
 // busca as despesas de determinado deputado
-const fetchDespesas = async (deputadoId: number) => {
-  const { data } = await axios.get(`${baseUrl}/despesas/findAll/${deputadoId}`);
-  if (data) return data;
+const fetchDespesas = async (deputadoId: string, page = 1) => {
+  console.log("🚀 ~ fetchDespesas ~ deputadoId:", deputadoId);
+  const { data } = await axios.get(
+    `${baseUrl}/despesas/findAll/${deputadoId}?page=${page}`
+  );
+  console.log("🚀 ~ fetchDespesas ~ data:", data);
+  return data;
 };
 
 export function useDespesas(
-  deputadoId: number
+  deputadoId: string,
+  page = 1
 ): UseQueryResult<ApiResponseDespesas> {
   return useQuery<ApiResponseDespesas>({
-    queryKey: ["Despesas", deputadoId],
-    queryFn: () => fetchDeputados(deputadoId),
+    queryKey: ["Despesas", deputadoId, page],
+    queryFn: () => fetchDespesas(deputadoId, page),
     staleTime: 1000 * 60 * 5,
   });
 }

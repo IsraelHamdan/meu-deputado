@@ -1,19 +1,19 @@
 export interface Despesas {
-    ano: number | null;
-    cnpjCpfFornecedor: string | null;
-    codDocumento: number | null;
-    codLote: number | null;
-    codTipoDocumento: number | null;
-    dataDocumento: string | null;
-    mes: number | null;
-    nomeFornecedor: string | null;
-    numDocumento: string | null;
-    numRessarcimento: string | null;
-    parcela: number | null;
-    tipoDespesa: string | null;
-    tipoDocumento: string | null;
-    urlDocumento: string | null;
-    valorDocumento: number | null;
-    valorGlosa: number | null;
-    valorLiquido: number | null;
+  ano: number | null;
+  cnpjCpfFornecedor: string | null;
+  codDocumento: number | null;
+  codLote: number | null;
+  codTipoDocumento: number | null;
+  dataDocumento: Date | null;
+  mes: number | null;
+  nomeFornecedor: string | null;
+  numDocumento: string | null;
+  numRessarcimento: string | null;
+  parcela: number | null;
+  tipoDespesa: string | null;
+  tipoDocumento: string | null;
+  urlDocumento: string | null;
+  valorDocumento: number | null;
+  valorGlosa: number | null;
+  valorLiquido: number | null;
 }

@@ -12,7 +12,7 @@ const HeaderComponent: React.FC = () => {
       direction={{ base: "column", md: "row" }}
       gap="10">
       <Heading size="xl">Meu Deputado</Heading>
-      <Button asChild colorScheme="teal" variant="solid">
+      <Button asChild colorScheme="teal" variant="solid" disabled>
         <Link href="/partidos">Partidos</Link>
       </Button>
       <Button asChild colorScheme="teal" variant="solid">

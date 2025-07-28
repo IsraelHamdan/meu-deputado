@@ -89,19 +89,24 @@ _s2(useDeputadoByName, "4ZpngI1uv+Uo3WQHEZmTQ5FNM+k=", false, function() {
     ];
 });
 // busca as despesas de determinado deputado
-const fetchDespesas = async (deputadoId)=>{
-    const { data } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("".concat(baseUrl, "/despesas/findAll/").concat(deputadoId));
-    if (data) return data;
+const fetchDespesas = async function(deputadoId) {
+    let page = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
+    console.log("🚀 ~ fetchDespesas ~ deputadoId:", deputadoId);
+    const { data } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("".concat(baseUrl, "/despesas/findAll/").concat(deputadoId, "?page=").concat(page));
+    console.log("🚀 ~ fetchDespesas ~ data:", data);
+    return data;
 };
 function useDespesas(deputadoId) {
+    let page = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
     _s3();
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             "Despesas",
-            deputadoId
+            deputadoId,
+            page
         ],
         queryFn: {
-            "useDespesas.useQuery": ()=>fetchDeputados(deputadoId)
+            "useDespesas.useQuery": ()=>fetchDespesas(deputadoId, page)
         }["useDespesas.useQuery"],
         staleTime: 1000 * 60 * 5
     });
@@ -414,20 +419,20 @@ function DeputadosDahboard() {
                     size: "lg"
                 }, void 0, false, {
                     fileName: "[project]/src/app/deputados/page.tsx",
-                    lineNumber: 37,
+                    lineNumber: 36,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$text$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Text"], {
                     children: "Carregando deputados..."
                 }, void 0, false, {
                     fileName: "[project]/src/app/deputados/page.tsx",
-                    lineNumber: 38,
+                    lineNumber: 37,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/deputados/page.tsx",
-            lineNumber: 36,
+            lineNumber: 35,
             columnNumber: 7
         }, this);
     }
@@ -439,20 +444,20 @@ function DeputadosDahboard() {
                     children: "Erro ao carregar deputados"
                 }, void 0, false, {
                     fileName: "[project]/src/app/deputados/page.tsx",
-                    lineNumber: 46,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$alert$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Alert$3e$__["Alert"].Description, {
                     children: "Não foi possível carregar os dados dos deputados."
                 }, void 0, false, {
                     fileName: "[project]/src/app/deputados/page.tsx",
-                    lineNumber: 47,
+                    lineNumber: 46,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/deputados/page.tsx",
-            lineNumber: 45,
+            lineNumber: 44,
             columnNumber: 7
         }, this);
     }
@@ -463,12 +468,12 @@ function DeputadosDahboard() {
                 children: "Nenhum deputado encontrado"
             }, void 0, false, {
                 fileName: "[project]/src/app/deputados/page.tsx",
-                lineNumber: 56,
+                lineNumber: 55,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/deputados/page.tsx",
-            lineNumber: 55,
+            lineNumber: 54,
             columnNumber: 7
         }, this);
     }
@@ -479,7 +484,7 @@ function DeputadosDahboard() {
     const despesasDashborad = "/deputados/".concat(deputadoId);
     const handleDeputadoClick = (deputado)=>{
         console.log("Deputado id: ".concat(deputadoId));
-        setDeputadoId(deputado.id);
+        setDeputadoId(String(deputado.id));
         setSelectedPartido(null);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$stack$2f$stack$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Stack"], {
@@ -494,7 +499,7 @@ function DeputadosDahboard() {
                 children: "Deputados dashboard"
             }, void 0, false, {
                 fileName: "[project]/src/app/deputados/page.tsx",
-                lineNumber: 74,
+                lineNumber: 73,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Root, {
@@ -509,53 +514,53 @@ function DeputadosDahboard() {
                                     children: "Nome"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 77,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].ColumnHeader, {
                                     children: "email"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 78,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].ColumnHeader, {
                                     children: "Gastos"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 79,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].ColumnHeader, {
                                     children: "Partido"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 80,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].ColumnHeader, {
                                     children: "Legislatura"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 82,
+                                    lineNumber: 81,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].ColumnHeader, {
                                     children: "UF"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 83,
+                                    lineNumber: 82,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/deputados/page.tsx",
-                            lineNumber: 77,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/deputados/page.tsx",
-                        lineNumber: 76,
+                        lineNumber: 75,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Body, {
@@ -571,12 +576,12 @@ function DeputadosDahboard() {
                                             children: deputado.nome
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 90,
+                                            lineNumber: 89,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 89,
+                                        lineNumber: 88,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Cell, {
@@ -585,32 +590,39 @@ function DeputadosDahboard() {
                                             children: deputado.email
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 97,
+                                            lineNumber: 96,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 96,
+                                        lineNumber: 95,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Cell, {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$button$2f$button$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: despesasDashborad,
-                                                children: "Ver Gastos"
+                                                href: "/deputados/".concat(deputado.id),
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$button$2f$button$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                    as: "a",
+                                                    children: "Ver Gastos"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/deputados/page.tsx",
+                                                    lineNumber: 101,
+                                                    columnNumber: 21
+                                                }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/deputados/page.tsx",
-                                                lineNumber: 101,
+                                                lineNumber: 100,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 100,
+                                            lineNumber: 99,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 99,
+                                        lineNumber: 98,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Cell, {
@@ -619,12 +631,12 @@ function DeputadosDahboard() {
                                             children: deputado.sigla_partido
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 105,
+                                            lineNumber: 106,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 105,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Cell, {
@@ -633,12 +645,12 @@ function DeputadosDahboard() {
                                             children: deputado.id_legislatura
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 109,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 107,
+                                        lineNumber: 108,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$table$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Table$3e$__["Table"].Cell, {
@@ -647,29 +659,29 @@ function DeputadosDahboard() {
                                             children: deputado.sigla_uf
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/deputados/page.tsx",
-                                            lineNumber: 111,
+                                            lineNumber: 112,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/deputados/page.tsx",
-                                        lineNumber: 110,
+                                        lineNumber: 111,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, deputado.id, true, {
                                 fileName: "[project]/src/app/deputados/page.tsx",
-                                lineNumber: 88,
+                                lineNumber: 87,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/deputados/page.tsx",
-                        lineNumber: 86,
+                        lineNumber: 85,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/deputados/page.tsx",
-                lineNumber: 75,
+                lineNumber: 74,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$pagination$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Pagination$3e$__["Pagination"].Root, {
@@ -688,17 +700,17 @@ function DeputadosDahboard() {
                                 "aria-label": "Anterior",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$lu$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["LuChevronLeft"], {}, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 125,
+                                    lineNumber: 126,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/deputados/page.tsx",
-                                lineNumber: 124,
+                                lineNumber: 125,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/deputados/page.tsx",
-                            lineNumber: 123,
+                            lineNumber: 124,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$pagination$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Pagination$3e$__["Pagination"].Items, {
@@ -710,12 +722,12 @@ function DeputadosDahboard() {
                                     children: page.value
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 130,
+                                    lineNumber: 131,
                                     columnNumber: 15
                                 }, void 0)
                         }, void 0, false, {
                             fileName: "[project]/src/app/deputados/page.tsx",
-                            lineNumber: 128,
+                            lineNumber: 129,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$chakra$2d$ui$2f$react$2f$dist$2f$esm$2f$components$2f$pagination$2f$namespace$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__Pagination$3e$__["Pagination"].NextTrigger, {
@@ -724,28 +736,28 @@ function DeputadosDahboard() {
                                 "aria-label": "Próxima",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$lu$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["LuChevronRight"], {}, void 0, false, {
                                     fileName: "[project]/src/app/deputados/page.tsx",
-                                    lineNumber: 136,
+                                    lineNumber: 137,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/deputados/page.tsx",
-                                lineNumber: 135,
+                                lineNumber: 136,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/deputados/page.tsx",
-                            lineNumber: 134,
+                            lineNumber: 135,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/deputados/page.tsx",
-                    lineNumber: 122,
+                    lineNumber: 123,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/deputados/page.tsx",
-                lineNumber: 117,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             deputadoId !== null && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$DeputadoCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -753,13 +765,13 @@ function DeputadosDahboard() {
                 onClose: ()=>setDeputadoId(null)
             }, void 0, false, {
                 fileName: "[project]/src/app/deputados/page.tsx",
-                lineNumber: 142,
+                lineNumber: 143,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/deputados/page.tsx",
-        lineNumber: 73,
+        lineNumber: 72,
         columnNumber: 5
     }, this);
 }

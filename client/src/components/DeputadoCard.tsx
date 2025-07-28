@@ -11,12 +11,11 @@ import {
   Card,
 } from "@chakra-ui/react";
 import { useDeputado } from "@/hooks/use-deputados"; // adapte ao seu projeto
-import { useRouter } from "next/navigation";
 import { Deputado } from "@/interfaces/DeputadosResponse";
 import Link from "next/link";
 
 interface DeputadoCardProps {
-  deputadoId: number;
+  deputadoId: string;
   onClose: () => void;
 }
 
@@ -26,7 +25,6 @@ export default function DeputadoCard({
 }: DeputadoCardProps) {
   console.log(`Deputado ID no card: ${deputadoId}`);
   const { data, isLoading, isError } = useDeputado(deputadoId);
-  const router = useRouter();
 
   if (isLoading) {
     return (

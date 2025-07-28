@@ -22,13 +22,12 @@ import { ApiResponseDeputados } from "@/interfaces/ApiResponse";
 import Link from "next/link";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import DeputadoCard from "@/components/DeputadoCard";
-import PartidoCard from "@/components/PartidoCard";
 
 export default function DeputadosDahboard() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { data, isLoading, isError, isSuccess } = useDeputados(currentPage);
   const [selectedPartido, setSelectedPartido] = useState<string | null>(null);
-  const [deputadoId, setDeputadoId] = useState<number | null>(null);
+  const [deputadoId, setDeputadoId] = useState<string | null>(null);
   const [nomeDeputado, setNomeDeputado] = useState<string>("");
 
   if (isLoading) {
@@ -65,7 +64,7 @@ export default function DeputadosDahboard() {
 
   const handleDeputadoClick = (deputado: Deputado) => {
     console.log(`Deputado id: ${deputadoId}`);
-    setDeputadoId(deputado.id);
+    setDeputadoId(String(deputado.id));
     setSelectedPartido(null);
   };
 
@@ -98,7 +97,9 @@ export default function DeputadosDahboard() {
               </Table.Cell>
               <Table.Cell>
                 <Button>
-                  <Link href={despesasDashborad}>Ver Gastos</Link>
+                  <Link href={`/deputados/${deputado.id}`}>
+                    <Button as="a">Ver Gastos</Button>
+                  </Link>
                 </Button>
               </Table.Cell>
               <Table.Cell>

@@ -1,47 +1,27 @@
-FROM node:20 as frontend_builder
-WORKDIR /var/www
-COPY package*.json ./
-RUN npm install
-
 FROM php:8.2-fpm
 
-# Instala dependências do sistema (sem node/npm aqui!)
+# Instala dependências do sistema
 RUN apt-get update && apt-get install -y \
-    bash \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    autoconf \
-    build-essential \
-    libxml2-dev \
-    zip \
-    unzip \
-    libpq-dev \
-    supervisor \
-    && docker-php-ext-install pdo pdo_pgsql
+  zip unzip curl git libpq-dev libonig-dev libxml2-dev \
+  && docker-php-ext-install pdo pdo_pgsql mbstring xml
 
+# Instala Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Define diretório de trabalho
 WORKDIR /var/www
 
-# Instala extensões PHP
-RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd
-
-# Composer
-COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
-
-# Copia app e node_modules
+# Copia os arquivos da aplicação
 COPY . .
-COPY --from=frontend_builder /var/www/node_modules ./node_modules
 
-# Instala dependências PHP
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# Instala dependências PHP (SÓ NA CONSTRUÇÃO)
+RUN composer install --no-dev --optimize-autoloader
 
-# Permissões
-RUN chown -R www-data:www-data /var/www
+# Dá permissões para o storage
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Copia o arquivo para o local correto
-COPY supervisord.conf /etc/supervisor/supervisord.conf
+# Exponha a porta
+EXPOSE 8000
 
-# E usa o CMD correto
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-
+# Comando padrão (roda sempre que iniciar o container)
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

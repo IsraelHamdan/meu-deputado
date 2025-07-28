@@ -1,0 +1,16 @@
+# Ignora as pastas
+resources/
+src/
+
+# Ignora arquivos de configuração JS/TS/Vite
+eslint.config.*
+package.json
+package-lock.json
+tsconfig.json
+vite.config.*
+
+# Ignora outros arquivos padrões
+node_modules/
+.env
+.DS_Store
+vendor/

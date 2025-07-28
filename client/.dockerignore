@@ -1,0 +1,10 @@
+# Ignora o build gerado localmente
+.next/
+
+# Ignora dependências instaladas fora da imagem
+node_modules/
+
+# Ignora arquivos sensíveis
+.env
+.env.*
+.DS_Store
