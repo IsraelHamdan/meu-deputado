@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Israel/Documents/dev/LARAVEL/meu-deputado/client/src/app/page.tsx"],"sourcesContent":["import DeputadosDahboard from \"./deputados/page\";\n\nexport default function Home() {\n  return <DeputadosDahboard />;\n}\n"],"names":[],"mappings":";;;;;;;;;;;AAEe,SAAS;IACtB,qBAAO,8OAAC;;;;;AACV","debugId":null}}]
-}

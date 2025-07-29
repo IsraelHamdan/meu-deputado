@@ -1,7 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/deputados/[id]/page": "app/deputados/[id]/page.js",
-  "/deputados/page": "app/deputados/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/deputados/[deputadoId]/page": "app/deputados/[deputadoId]/page.js"
 }

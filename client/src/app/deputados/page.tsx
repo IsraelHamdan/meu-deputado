@@ -60,11 +60,10 @@ export default function DeputadosDahboard() {
   const deputados = Array.isArray(data.data) ? data.data : [data.data];
   const pagination = data.pagination;
 
-  const despesasDashborad = `/deputados/${deputadoId}`;
+  const handleDeputadoClick = (deputadoId: string) => {
+    console.log(`Deputado id no Dashboard de deputados: ${deputadoId}`);
+    setDeputadoId(deputadoId);
 
-  const handleDeputadoClick = (deputado: Deputado) => {
-    console.log(`Deputado id: ${deputadoId}`);
-    setDeputadoId(String(deputado.id));
     setSelectedPartido(null);
   };
 
@@ -88,7 +87,7 @@ export default function DeputadosDahboard() {
               <Table.Cell>
                 <Button
                   variant="solid"
-                  onClick={() => handleDeputadoClick(deputado)}>
+                  onClick={() => handleDeputadoClick(deputado.id)}>
                   {deputado.nome}
                 </Button>
               </Table.Cell>
@@ -97,9 +96,7 @@ export default function DeputadosDahboard() {
               </Table.Cell>
               <Table.Cell>
                 <Button>
-                  <Link href={`/deputados/${deputado.id}`}>
-                    <Button as="a">Ver Gastos</Button>
-                  </Link>
+                  <Link href={`/deputados/${deputado.id}`}>Ver Gastos</Link>
                 </Button>
               </Table.Cell>
               <Table.Cell>

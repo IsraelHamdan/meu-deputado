@@ -2,8 +2,11 @@ import { useQuery, useQueries, UseQueryResult } from "@tanstack/react-query";
 import {
   ApiResponseDeputados,
   ApiResponseDespesas,
+  ApiResponseRaw,
 } from "@/interfaces/ApiResponse";
 import axios from "axios";
+import dynamic from "next/dynamic";
+import { Despesas } from "@/interfaces/DespesasResponse";
 
 const baseUrl = "http://127.0.0.1:8000/api";
 
@@ -60,13 +63,40 @@ export function useDeputadoByName(
 }
 
 // busca as despesas de determinado deputado
+// hooks/useDespesas.ts
 const fetchDespesas = async (deputadoId: string, page = 1) => {
-  console.log("🚀 ~ fetchDespesas ~ deputadoId:", deputadoId);
-  const { data } = await axios.get(
+  const resp = await axios.get<ApiResponseRaw>(
     `${baseUrl}/despesas/findAll/${deputadoId}?page=${page}`
   );
-  console.log("🚀 ~ fetchDespesas ~ data:", data);
-  return data;
+  // Supondo resp.data = { success, pagination, data: [ { snake_case… } ] }
+  const raw = Array.isArray(resp.data.data) ? resp.data.data : [];
+  const converted: Despesas[] = raw.map((item) => ({
+    ano: item.ano,
+    cnpjCpfFornecedor: item.cnpj_cpf_fornecedor,
+    codDocumento: item.cod_documento,
+    codLote: item.cod_lote,
+    codTipoDocumento: item.cod_tipo_documento,
+    dataDocumento: item.data_documento ? new Date(item.data_documento) : null,
+    mes: item.mes,
+    nomeFornecedor: item.nome_fornecedor,
+    numDocumento: item.num_documento,
+    numRessarcimento: item.num_ressarcimento || null,
+    parcela: item.parcela,
+    tipoDespesa: item.tipo_despesa,
+    tipoDocumento: item.tipo_documento,
+    urlDocumento: item.url_documento,
+    valorDocumento:
+      item.valor_documento !== null ? parseFloat(item.valor_documento) : null,
+    valorGlosa: item.valor_glosa !== null ? parseFloat(item.valor_glosa) : null,
+    valorLiquido:
+      item.valor_liquido !== null ? parseFloat(item.valor_liquido) : null,
+  }));
+
+  return {
+    success: resp.data.success,
+    pagination: resp.data.pagination,
+    data: converted,
+  } as ApiResponseDespesas;
 };
 
 export function useDespesas(
